@@ -3,11 +3,41 @@ use std::cmp::Ordering;
 use rand::Rng;
 
 fn main() {
-    println!("Guess the number!");
+    
+    loop {
 
+        println!("Select a program:");
+        println!("1) Number Guessing Game");
+        println!("2) Variable Mutability Demo");
+
+        let mut selection = String::new();
+
+        io::stdin().read_line(&mut selection)
+            .expect("Failed to read line");
+
+        let selection: u32 = match selection.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
+
+        match selection {
+            1 => number_guessing(),
+            2 => variable_mutability(),
+            _ => {
+                println!("Please enter a valid option.");
+                continue;
+            }
+        }
+    }
+}
+
+fn number_guessing() {
     let secret_number = rand::thread_rng().gen_range(1,101);
 
     loop {
+        println!("--------------");
+        println!("Welcome to the Number Guessing Game!");
+        println!("--------------");
         println!("Please input your guess.");
 
         let mut guess = String::new();
@@ -32,4 +62,27 @@ fn main() {
             }
         }
     }
+}
+
+fn variable_mutability() {
+    // mut allows the variable x to be mutable elsewhere in the code.
+    let mut x = 5;
+    println!("The value of x: {}", x);
+    x = 6;
+    println!("The value of x: {}", x);
+
+    // Constants must be expressions and have a type annotated.
+    const MAX_POINTS: u32 = 100_000;
+    println!("Here is a constant value: {}", MAX_POINTS);
+
+    // An example of shadowing. Each let statement is technically a new variable.
+    let y = 5;
+    let y = y + 1;
+    let y = y * 2;
+    println!("The value of y is: {}", y);
+
+    // Shadowing allows us to effectively change the type of a variable/
+    let spaces = "    ";
+    let spaces = spaces.len();
+    println!("{}", spaces);
 }
