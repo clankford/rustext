@@ -15,6 +15,8 @@ fn main() {
         io::stdin().read_line(&mut selection)
             .expect("Failed to read line");
 
+        // The variable that the result from .parse() is stored to must have a type defined
+        // because of the general nature of the parse method.
         let selection: u32 = match selection.trim().parse() {
             Ok(num) => num,
             Err(_) => continue,
@@ -45,7 +47,7 @@ fn number_guessing() {
         io::stdin().read_line(&mut guess)
             .expect("Failed to read line");
 
-        // New variable guess is a shadow of the alreadt declared variable guess.
+        // New variable guess is a shadow of the already declared variable guess.
         let guess: u32 = match guess.trim().parse() {
             Ok(num) => num,
             Err(_) => continue,
