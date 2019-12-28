@@ -9,6 +9,7 @@ fn main() {
         println!("Select a program:");
         println!("1) Number Guessing Game");
         println!("2) Variable Mutability Demo");
+        println!("3) Open RusTexT");
 
         let mut selection = String::new();
 
@@ -25,12 +26,27 @@ fn main() {
         match selection {
             1 => number_guessing(),
             2 => variable_mutability(),
+            3 => rustext(),
             _ => {
                 println!("Please enter a valid option.");
                 continue;
             }
         }
     }
+}
+
+fn rustext() {
+    println!("--------------");
+    println!("Welcome to RusTexT!");
+    println!("--------------");
+    println!("Start writing your document.");
+
+    let mut doc = String::new();
+
+    io::stdin().read_line(&mut doc)
+        .expect("Failed to read line");
+    
+    println!("{}", doc);
 }
 
 fn number_guessing() {
