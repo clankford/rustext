@@ -1,3 +1,6 @@
+# Application files
+*.txt
+
 # Generated files
 /target/
 
