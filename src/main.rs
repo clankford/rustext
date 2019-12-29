@@ -28,7 +28,7 @@ fn main() {
         match selection {
             1 => number_guessing(),
             2 => variable_mutability(),
-            3 => rustext().expect("Failed to write document."),
+            3 => rustext(),
             _ => {
                 println!("Please enter a valid option.");
                 continue;
@@ -37,13 +37,44 @@ fn main() {
     }
 }
 
-fn rustext() -> std::io::Result<()> {
+fn rustext() {
     println!("--------------");
     println!("Welcome to RusTexT!");
     println!("--------------");
-    println!("Start writing your document.");
 
+    loop {
+
+        println!("Options:");
+        println!("1) Create a new document");
+        println!("2) Edit an existing document");
+
+        let mut selection = String::new();
+
+        io::stdin().read_line(&mut selection)
+            .expect("Failed to read line");
+
+        // The variable that the result from .parse() is stored to must have a type defined
+        // because of the general nature of the parse method.
+        let selection: u32 = match selection.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
+
+        match selection {
+            1 => create_document().expect("Failed to write document."),
+            2 => edit_document().expect("Failed to write document."),
+            _ => {
+                println!("Please enter a valid option.");
+                continue;
+            }
+        }
+    }
+}
+
+fn create_document() -> std::io::Result<()> {
     let mut doc = String::new();
+
+    println!("Please write your document below:");
 
     io::stdin().read_line(&mut doc)
         .expect("Failed to read line");
@@ -52,6 +83,11 @@ fn rustext() -> std::io::Result<()> {
     
     let mut file = File::create("text.txt")?;
     write!(file, "{}", doc)?;
+    Ok(())
+}
+
+fn edit_document() -> std::io::Result<()> {
+    println!("Unimplemented functionality - Edit Document");
     Ok(())
 }
 
