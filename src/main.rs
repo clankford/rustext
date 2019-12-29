@@ -1,5 +1,7 @@
 use std::io;
 use std::cmp::Ordering;
+use std::fs::File;
+use std::io::prelude::*;
 use rand::Rng;
 
 fn main() {
@@ -26,7 +28,7 @@ fn main() {
         match selection {
             1 => number_guessing(),
             2 => variable_mutability(),
-            3 => rustext(),
+            3 => rustext().expect("Failed to write document."),
             _ => {
                 println!("Please enter a valid option.");
                 continue;
@@ -35,7 +37,7 @@ fn main() {
     }
 }
 
-fn rustext() {
+fn rustext() -> std::io::Result<()> {
     println!("--------------");
     println!("Welcome to RusTexT!");
     println!("--------------");
@@ -45,8 +47,12 @@ fn rustext() {
 
     io::stdin().read_line(&mut doc)
         .expect("Failed to read line");
-    
+
     println!("{}", doc);
+    
+    let mut file = File::create("text.txt")?;
+    write!(file, "{}", doc)?;
+    Ok(())
 }
 
 fn number_guessing() {
