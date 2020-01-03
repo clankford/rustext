@@ -73,21 +73,18 @@ fn rustext() {
 
 fn create_document() -> std::io::Result<()> {
     let mut doc = String::new();
-
     println!("Please write your document below:");
-
-    io::stdin().read_line(&mut doc)
-        .expect("Failed to read line");
-
-    println!("{}", doc);
-    
+    io::stdin().read_line(&mut doc)?;
     let mut file = File::create("text.txt")?;
     write!(file, "{}", doc)?;
     Ok(())
 }
 
 fn edit_document() -> std::io::Result<()> {
-    println!("Unimplemented functionality - Edit Document");
+    let mut doc = File::open("text.txt")?;
+    let mut buffer = String::new();
+    doc.read_to_string(&mut buffer)?;
+    println!("{}", buffer);
     Ok(())
 }
 
