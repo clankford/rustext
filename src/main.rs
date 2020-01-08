@@ -49,7 +49,7 @@ fn create_document() -> std::io::Result<()> {
     write!(file, "{}", doc)?;
     Ok(())
 }
-
+//Test
 fn edit_document() -> std::io::Result<()> {
     let mut doc = File::open("test.txt")?;
     let mut buffer = String::new();
