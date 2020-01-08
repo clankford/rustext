@@ -49,9 +49,14 @@ fn create_document() -> std::io::Result<()> {
     write!(file, "{}", doc)?;
     Ok(())
 }
-//Test
+
 fn edit_document() -> std::io::Result<()> {
-    let mut doc = File::open("test.txt")?;
+    let mut name = String::new(); 
+    
+    println!("Please enter the name of the document you want to open:");
+    io::stdin().read_line(&mut name)?;
+    println!("Opening {}...", name.trim());
+    let mut doc = File::open(format!("{}.txt", name.trim()))?;
     let mut buffer = String::new();
     doc.read_to_string(&mut buffer)?;
     println!("{}", buffer);
