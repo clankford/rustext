@@ -73,9 +73,12 @@ fn rustext() {
 
 fn create_document() -> std::io::Result<()> {
     let mut doc = String::new();
+    let mut name = String::new();
     println!("Please write your document below:");
     io::stdin().read_line(&mut doc)?;
-    let mut file = File::create("text.txt")?;
+    println!("Enter file name:");
+    io::stdin().read_line(&mut name)?;
+    let mut file = File::create(format!("{}.txt", name.trim()))?;
     write!(file, "{}", doc)?;
     Ok(())
 }
