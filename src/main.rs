@@ -38,7 +38,7 @@ fn main() {
     }
 }
 
-fn create_document() -> std::io::Result<()> {
+fn create_document() -> io::Result<()> {
     let mut doc = String::new();
     let mut name = String::new();
     println!("Please write your document below:");
@@ -50,15 +50,27 @@ fn create_document() -> std::io::Result<()> {
     Ok(())
 }
 
-fn edit_document() -> std::io::Result<()> {
-    let mut name = String::new(); 
+fn edit_document() -> io::Result<()> {
+    let mut name = String::new();
     
     println!("Please enter the name of the document you want to open:");
     io::stdin().read_line(&mut name)?;
     println!("Opening {}...", name.trim());
-    let mut doc = File::open(format!("{}.txt", name.trim()))?;
-    let mut buffer = String::new();
-    doc.read_to_string(&mut buffer)?;
+    let buffer = match open_document(name) {
+        Ok(buffer) => buffer,
+        // TODO: Come back to this error handling, it doesn't feel correct.
+        Err(_) => {
+            "File does not exist.".to_owned()
+        },
+    };
     println!("{}", buffer);
     Ok(())
 }
+
+fn open_document(name: String) -> io::Result<String> {
+    let mut doc = File::open(format!("{}.txt", name.trim()))?;
+    let mut buffer = String::new();
+    doc.read_to_string(&mut buffer)?;
+    Ok(buffer)
+}
+
