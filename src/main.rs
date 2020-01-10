@@ -59,7 +59,10 @@ fn edit_document() -> io::Result<()> {
     let buffer = match open_document(name) {
         Ok(buffer) => buffer,
         // TODO: Come back to this error handling, it doesn't feel correct.
+        // - May want to use a custom error type to have a more standad way
+        //   of displaying useful error messages to the user.
         Err(_) => {
+            // Convert from &str to String
             "File does not exist.".to_owned()
         },
     };
@@ -67,7 +70,7 @@ fn edit_document() -> io::Result<()> {
     Ok(())
 }
 
-fn open_document(name: String) -> io::Result<String> {
+fn open_document(name: String) -> Result<String, io::Error> {
     let mut doc = File::open(format!("{}.txt", name.trim()))?;
     let mut buffer = String::new();
     doc.read_to_string(&mut buffer)?;
