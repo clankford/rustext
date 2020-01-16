@@ -1,10 +1,17 @@
 use std::io;
-use std::fs::File;
-use std::io::prelude::*;
+/* use std::fs::File;
+use std::io::prelude::*; */
 
 fn main() {
-    
-    println!("--------------");
+
+    println!("What is your name?");
+    let mut name = String::new();
+    io::stdin().read_line(&mut name)
+        .expect("Failed to read line");
+    println!("Hello, {}, nice to meet you!", name.trim());
+
+}
+    /* println!("--------------");
     println!("Welcome to RusTexT!");
     println!("--------------");
 
@@ -76,4 +83,4 @@ fn open_document(name: String) -> Result<String, io::Error> {
     doc.read_to_string(&mut buffer)?;
     Ok(buffer)
 }
-
+ */
